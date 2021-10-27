@@ -6,40 +6,45 @@ var specialChar = ["!", "#", "$", "%", "&", "*", "+", "-", ".", "/", ";", ":", "
 var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
 
-var passLength = window.prompt("How many characters would you like to have in your password? Please choose between 8 and 128 characters.");
+var generatePassword = function (){
 
+  var passLength = window.prompt("How many characters would you like to have in your password? Please choose between 8 and 128 characters.");
 
+    if (passLength >=8 || passLength <= 128) {
 
+      window.prompt("Would you like lowercase characters in your password?");
+        if (true){
+        }
 
+      window.prompt("Would you like uppercase characters in your password?");
 
+        if (true){
+          
+        }
 
+      window.prompt("Would you like special characters in your password?");
 
+        if (true){
+          
+        }
 
+      window.prompt("Would you like numbers in your password?");
 
+        if (true){
+         
+        }
 
+    }
 
+    else {
 
+      window.alert("You need to choose between 8 and 128 characters for your password. Please try again.");
 
+      return generatePassword ();
 
-window.prompt("Would you like lowercase characters in your password?");
- 
-window.prompt("Would you like uppercase characters in your password?");
-  
-window.prompt("Would you like special characters in your password?");
-  
-window.prompt("Would you like numbers in your password?");
- 
+    }
 
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
