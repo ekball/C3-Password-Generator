@@ -13,26 +13,16 @@ var generatePassword = function (){
     if (passLength >=8 || passLength <= 128) {
 
       window.prompt("Would you like lowercase characters in your password?");
-        if (true){
-        }
-
+ 
       window.prompt("Would you like uppercase characters in your password?");
 
-        if (true){
-          
-        }
-
+   
       window.prompt("Would you like special characters in your password?");
 
-        if (true){
-          
-        }
-
+  
       window.prompt("Would you like numbers in your password?");
 
-        if (true){
-         
-        }
+    
 
     }
 
@@ -52,6 +42,24 @@ var generatePassword = function (){
 
 
 
+var randomize = function(min, max) {
+
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+  
+    return value;
+
+  };
+
+var loopItLowerCase = function(x){
+
+  for (var i = 0; i < lowerCase.length; i ++){
+
+
+  }
+
+}
+
+generatePassword ();
 
 
 
