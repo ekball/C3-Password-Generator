@@ -47,9 +47,9 @@ promptNumbers = promptNumbers.toLowerCase;
 
     if (passLength >=8 || passLength <= 128) {
 
-      fourArrays ();
+      fourArrays();
 
-      
+      threeArrays();
 
     }
 
@@ -77,7 +77,7 @@ var fourArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for any of the four arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array
+          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
 
       if (chooseArray <= .25){
         pass = pass + lowerCase[randomIndexLowercase];
@@ -95,14 +95,106 @@ var fourArrays = function () {
         pass = pass + numbers[randomIndexNumbers];
       }
     }
-
   }
-
 }
 
 
+// if user wants to use 3 character types
 
+var threeArrays = function () {
 
+  // check to make sure user selected 'yes' on three character types, but not numbers
+  if (promptLowerCase === "yes" && promptUpperCase === "yes" && promptSpecialChar === "yes" && promptNumbers === "no" ) {
+    
+    // use a loop to build password until password length is the same as what user chose
+    for (var i = 0; i <= passLength; i++) {
+
+      // provides an equal random chance for any of the three arrays to be chosen
+          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+
+      if (chooseArray <= .33){
+        pass = pass + lowerCase[randomIndexLowercase];
+      }
+
+      else if (chooseArray > .33 && chooseArray <= .66) {
+        pass = pass + upperCase[randomIndexUppercase];
+      }
+
+      else {
+        pass = pass + specialChar[randomIndexSpecialChar];
+      }
+    }
+  }
+
+  // check to make sure user selected 'yes' on three character types, but not special chars
+  else if (promptLowerCase === "yes" && promptUpperCase === "yes" && promptSpecialChar === "no" && promptNumbers === "yes" ) {
+    
+    // use a loop to build password until password length is the same as what user chose
+    for (var i = 0; i <= passLength; i++) {
+  
+      // provides an equal random chance for any of the three arrays to be chosen
+          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+  
+      if (chooseArray <= .33){
+        pass = pass + lowerCase[randomIndexLowercase];
+      }
+  
+      else if (chooseArray > .33 && chooseArray <= .66) {
+        pass = pass + upperCase[randomIndexUppercase];
+      }
+  
+      else {
+        pass = pass + numbers[randomIndexNumbers];
+      }
+    }
+  }
+
+  // check to make sure user selected 'yes' on three character types, but not uppercase chars
+  else if (promptLowerCase === "yes" && promptUpperCase === "no" && promptSpecialChar === "yes" && promptNumbers === "yes" ) {
+    
+    // use a loop to build password until password length is the same as what user chose
+    for (var i = 0; i <= passLength; i++) {
+  
+      // provides an equal random chance for any of the three arrays to be chosen
+          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+  
+      if (chooseArray <= .33){
+        pass = pass + lowerCase[randomIndexLowercase];
+      }
+  
+      else if (chooseArray > .33 && chooseArray <= .66) {
+        pass = pass + specialChar[randomIndexSpecialChar];
+      }
+  
+      else {
+        pass = pass + numbers[randomIndexNumbers];
+      }
+    } 
+  }
+
+   // check to make sure user selected 'yes' on three character types, but not lowercase chars
+   else if (promptLowerCase === "no" && promptUpperCase === "yes" && promptSpecialChar === "yes" && promptNumbers === "yes" ) {
+    
+    // use a loop to build password until password length is the same as what user chose
+    for (var i = 0; i <= passLength; i++) {
+  
+      // provides an equal random chance for any of the three arrays to be chosen
+          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+  
+      if (chooseArray <= .33){
+        pass = pass + upperCase[randomIndexUppercase];
+      }
+  
+      else if (chooseArray > .33 && chooseArray <= .66) {
+        pass = pass + specialChar[randomIndexSpecialChar];
+      }
+  
+      else {
+        pass = pass + numbers[randomIndexNumbers];
+      }
+    }
+  }
+}
 
 
 
