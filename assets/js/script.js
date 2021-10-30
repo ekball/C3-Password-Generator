@@ -18,7 +18,7 @@ var randomIndexUppercase = randomize(1, 26);
 var randomIndexSpecialChar = randomize(1, 20);
 var randomIndexNumbers = randomize(1, 10);
 
-
+// retrieve user input for how long to make the password (must be between 8 and 128 characters)
 var choosePassLength  = function () {
 
  var passLength =  window.prompt("How many characters would you like to have in your password? Please choose between 8 and 128 characters.");
@@ -27,40 +27,61 @@ var choosePassLength  = function () {
 
 }
 
+// retrieve user input for whether or not to use lowercase chars
+var promptLowerCaseFunc = function() {
 
+  var promptLowerCase = window.prompt("Would you like lowercase characters in your password? Please type YES or NO.");
+  promptLowerCase = promptLowerCase.toLowerCase;
+  return promptLowerCase;
+
+}
+
+// retrieve user input for whether or not to use uppercase chars
+var promptUpperCaseFunc = function() {
+  
+  var promptUpperCase = window.prompt("Would you like uppercase characters in your password? Please type YES or NO.");
+  promptUpperCase = promptUpperCase.toLowerCase;  
+  return promptUpperCase;
+
+}
+
+// retrieve user input for whether or not to use special chars
+var promptSpecialCharFunc = function() {
+  
+  var promptSpecialChar = window.prompt("Would you like special characters in your password? Please type YES or NO.");
+  promptSpecialChar = promptSpecialChar.toLowerCase;
+  return promptSpecialChar;
+
+}
+
+// retrieve user input for whether or not to use numbers
+var promptNumbersFunc = function() {
+  
+  var promptNumbers = window.prompt("Would you like numbers in your password? Please type YES or NO.");
+  promptNumbers = promptNumbers.toLowerCase;
+  return promptNumbers;
+
+}
 
 // main function to generate password
 var generatePassword = function (){
 
-var passLength = choosePassLength();
+  var passLength = choosePassLength();
 
-// retrieve user input about which chars to use and convert responses to lower case for if/else statements
-var promptLowerCase = window.prompt("Would you like lowercase characters in your password? Please type YES or NO.");
-promptLowerCase = promptLowerCase.toLowerCase;
-
-var promptUpperCase = window.prompt("Would you like uppercase characters in your password? Please type YES or NO.");
-promptUpperCase = promptUpperCase.toLowerCase;
-
-var promptSpecialChar = window.prompt("Would you like special characters in your password? Please type YES or NO.");
-promptSpecialChar = promptSpecialChar.toLowerCase;
-
-var promptNumbers = window.prompt("Would you like numbers in your password? Please type YES or NO.");
-promptNumbers = promptNumbers.toLowerCase;
+  // retrieve user input about which chars to use and convert responses to lower case for if/else statements
+  var promptLowerCase = promptLowerCaseFunc();
+  var promptUpperCase = promptUpperCaseFunc();
+  var promptSpecialChar = promptSpecialCharFunc();
+  var promptNumbers = promptNumbersFunc();
 
     // check to see if the users desired password length is between 8 and 128 characters
     if (passLength >=8 || passLength <= 128) {
 
       // check the responses of the user for each character type & run through each function until correct matching statements are found
 
-      fourArrays();
+      checkArrays ();
 
-      threeArrays();
-
-      twoArrays();
-
-      singleArray();
     }
-
 
     // if user enters a number not b/w 8 and 128, notify of error, and restart function
     else {
@@ -205,6 +226,7 @@ var threeArrays = function () {
 }
 
 
+
 // if user wants to use 2 character types
 
 var twoArrays = function () {
@@ -342,7 +364,7 @@ var singleArray = function () {
   }
 
   // check to make sure user selected 'yes' on a single character type - uppercase
-  if (promptLowerCase === "yes" && promptUpperCase === "no" && promptSpecialChar === "no" && promptNumbers === "no" ) {
+  if (promptLowerCase === "no" && promptUpperCase === "yes" && promptSpecialChar === "no" && promptNumbers === "no" ) {
     
     // use a loop to build password until password length is the same as what user chose
     for (var i = 0; i <= passLength; i++) {
@@ -354,7 +376,7 @@ var singleArray = function () {
   }
 
   // check to make sure user selected 'yes' on a single character type - special chars
-  if (promptLowerCase === "yes" && promptUpperCase === "no" && promptSpecialChar === "no" && promptNumbers === "no" ) {
+  if (promptLowerCase === "no" && promptUpperCase === "no" && promptSpecialChar === "yes" && promptNumbers === "no" ) {
     
     // use a loop to build password until password length is the same as what user chose
     for (var i = 0; i <= passLength; i++) {
@@ -366,7 +388,7 @@ var singleArray = function () {
   }
 
   // check to make sure user selected 'yes' on a single character type - numbers
-  if (promptLowerCase === "yes" && promptUpperCase === "no" && promptSpecialChar === "no" && promptNumbers === "no" ) {
+  if (promptLowerCase === "no" && promptUpperCase === "no" && promptSpecialChar === "no" && promptNumbers === "yes" ) {
     
     // use a loop to build password until password length is the same as what user chose
     for (var i = 0; i <= passLength; i++) {
@@ -379,23 +401,7 @@ var singleArray = function () {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// function that selects a random index using the upper and lower parameters of an arrays length
 var randomize = function(min, max) {
 
     var value = Math.floor(Math.random() * (max - min + 1) + min);
@@ -404,15 +410,55 @@ var randomize = function(min, max) {
 
   };
 
-// var loopItLowerCase = function(x){
+// checks user response for desired characters and runs through functions to build password or catches incorrect responses and restarts password generator
+var checkArrays = function () {
 
-//   for (var i = 0; i < lowerCase.length; i ++){
+  fourArrays();
+  threeArrays();
+  twoArrays();
+  singleArray();
 
+  errorCatcher();
+ 
+}
 
-//   }
+// checks to see if user selected appropriate response during character type selection process
+    // if user enters wrong info, they are notified and forced to restart password generator
+var errorCatcher = function() {
 
-// }
+  if (promptLowerCase === !"yes" && promptLowerCase === !"no") {
 
+    window.alert("You must choose either yes or no. Please try again.");
+
+    return generatePassword();
+
+  }
+
+  else if (promptUpperCase === !"yes" && promptUpperCase === !"no") {
+
+    window.alert("You must choose either yes or no. Please try again.");
+
+    return generatePassword();
+
+  }
+
+  else if (promptSpecialChar === !"yes" && promptSpecialChar === !"no") {
+
+    window.alert("You must choose either yes or no. Please try again.");
+
+    return generatePassword();
+
+  }
+
+  else if (promptNumbers === !"yes" && promptNumbers === !"no") {
+
+    window.alert("You must choose either yes or no. Please try again.");
+
+    return generatePassword();
+
+  }
+
+}
 
 
 
