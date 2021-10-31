@@ -16,7 +16,7 @@ var promptSpecialChar = "";
 var promptNumbers = "";
 var passLength = 0;
 
-// function that selects a random index using the upper and lower parameters of an arrays length
+// function that selects a random index using an arrays length
 var randomize = function(max) {
 
   var value = Math.floor(Math.random() * max);
@@ -130,7 +130,6 @@ var fourArrays = function () {
       var chooseArray = Math.random();
 
       if (chooseArray <= .25){
-
         // choose which random index is chosen from the array, then add to end of password
         var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
@@ -485,6 +484,7 @@ var checkArrays = function () {
 // main function to generate password
 var generatePassword = function (){
 
+  // prompt user to choose their desired password length
   choosePassLength();
 
   // retrieve user input about which chars to use and catch erroneous responses, then force user to try again for a correct response
@@ -495,7 +495,6 @@ var generatePassword = function (){
   promptSpecialChar = promptSpecialCharFunc();
 
   promptNumbers = promptNumbersFunc();
-
 
     // check to see if the users desired password length is between 8 and 128 characters
     if (passLength >=8 && passLength <= 128) {
@@ -524,43 +523,6 @@ var generatePassword = function (){
   writePassword();
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
