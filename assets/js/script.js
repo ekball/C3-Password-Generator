@@ -3,102 +3,123 @@
 // arrays that house all characters required for building a password
 var lowerCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var specialChar = ["!", "#", "$", "%", "&", "*", "+", "-", ".", "/", ";", ":", "<", ">", "=", "?", "@", "^", "_", "~"];
-var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+var specialChar = ["!", "#", "$", "%", "&", "*", "+", "-", ".", "/", ";", ":", "<", ">", "=", "?", "@", "^", "_"];
+var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 // a blank string to put randomly chosen indexes into and concatenate together to build the password
 var pass = "";
 
-// variable used to streamline randomly choosing which array to pull a random index from
-var chooseArray = Math.random();
+// initializes these variables as global variables to use in any function (responses are local variables without this)
+var promptLowerCase = "";
+var promptUpperCase = "";
+var promptSpecialChar = "";
+var promptNumbers = "";
+var passLength = 0;
 
-// variables used to streamline which random index from an array is chosen
-var randomIndexLowercase = randomize(1, 26);
-var randomIndexUppercase = randomize(1, 26);
-var randomIndexSpecialChar = randomize(1, 20);
-var randomIndexNumbers = randomize(1, 10);
+// function that selects a random index using the upper and lower parameters of an arrays length
+var randomize = function(max) {
+
+  var value = Math.floor(Math.random() * max);
+
+  return value;
+
+};
 
 // retrieve user input for how long to make the password (must be between 8 and 128 characters)
 var choosePassLength  = function () {
 
- var passLength =  window.prompt("How many characters would you like to have in your password? Please choose between 8 and 128 characters.");
+ passLength =  window.prompt("How many characters would you like to have in your password? Please choose between 8 and 128 characters.");
 
  return passLength;
 
 }
 
-// retrieve user input for whether or not to use lowercase chars
+// retrieve user input for whether or not to use lowercase chars, then convert response to a lowercase string for if/else statements
 var promptLowerCaseFunc = function() {
 
-  var promptLowerCase = window.prompt("Would you like lowercase characters in your password? Please type YES or NO.");
-  promptLowerCase = promptLowerCase.toLowerCase;
+  promptLowerCase = window.prompt("Would you like lowercase characters in your password? Please type YES or NO.");
+
+  // make the cancel button work
+  if (promptLowerCase === null) {
+    return;
+  }
+
+  // check for correct response; if not correct, then force user to try again
+  else if (promptLowerCase !== "yes" && promptLowerCase !== "no") {
+    window.alert("You must choose either yes or no. Please try again.");
+    return promptLowerCaseFunc();
+  }
+
+  promptLowerCase = promptLowerCase.toLowerCase();
   return promptLowerCase;
 
 }
 
-// retrieve user input for whether or not to use uppercase chars
+// retrieve user input for whether or not to use uppercase chars, then convert response to a lowercase string for if/else statements
 var promptUpperCaseFunc = function() {
   
-  var promptUpperCase = window.prompt("Would you like uppercase characters in your password? Please type YES or NO.");
-  promptUpperCase = promptUpperCase.toLowerCase;  
+  promptUpperCase = window.prompt("Would you like uppercase characters in your password? Please type YES or NO.");
+
+  // make the cancel button work
+  if (promptUpperCase === null) {
+    return;
+  }
+
+  // check for correct response; if not correct, then force user to try again
+  else if (promptUpperCase !== "yes" && promptUpperCase !== "no") {
+    window.alert("You must choose either yes or no. Please try again.");
+    return promptUpperCaseFunc();
+  }
+
+  promptUpperCase = promptUpperCase.toLowerCase();  
   return promptUpperCase;
 
 }
 
-// retrieve user input for whether or not to use special chars
+// retrieve user input for whether or not to use special chars, then convert response to a lowercase string for if/else statements
 var promptSpecialCharFunc = function() {
   
-  var promptSpecialChar = window.prompt("Would you like special characters in your password? Please type YES or NO.");
-  promptSpecialChar = promptSpecialChar.toLowerCase;
+  promptSpecialChar = window.prompt("Would you like special characters in your password? Please type YES or NO.");
+
+  // make the cancel button work
+  if (promptSpecialChar === null) {
+    return;
+  } 
+
+  // check for correct response; if not correct, then force user to try again
+  else if (promptSpecialChar !== "yes" && promptSpecialChar !== "no") {
+    window.alert("You must choose either yes or no. Please try again.");
+    return promptSpecialCharFunc();
+  } 
+  
+  promptSpecialChar = promptSpecialChar.toLowerCase();
   return promptSpecialChar;
 
 }
 
-// retrieve user input for whether or not to use numbers
+// retrieve user input for whether or not to use numbers, then convert response to a lowercase string for if/else statements
 var promptNumbersFunc = function() {
   
-  var promptNumbers = window.prompt("Would you like numbers in your password? Please type YES or NO.");
-  promptNumbers = promptNumbers.toLowerCase;
+  promptNumbers = window.prompt("Would you like numbers in your password? Please type YES or NO.");
+  
+  // make the cancel button work
+  if (promptNumbers === null) {
+    return;
+  }
+
+  // check for correct response; if not correct, then force user to try again
+  else if (promptNumbers !== "yes" && promptNumbers !== "no") {
+    window.alert("You must choose either yes or no. Please try again.");
+    return promptNumbersFunc();
+  }
+
+  promptNumbers = promptNumbers.toLowerCase();
   return promptNumbers;
 
 }
 
-// main function to generate password
-var generatePassword = function (){
-
-  var passLength = choosePassLength();
-
-  // retrieve user input about which chars to use and convert responses to lower case for if/else statements
-  var promptLowerCase = promptLowerCaseFunc();
-  var promptUpperCase = promptUpperCaseFunc();
-  var promptSpecialChar = promptSpecialCharFunc();
-  var promptNumbers = promptNumbersFunc();
-
-    // check to see if the users desired password length is between 8 and 128 characters
-    if (passLength >=8 || passLength <= 128) {
-
-      // check the responses of the user for each character type & run through each function until correct matching statements are found
-
-      checkArrays ();
-
-    }
-
-    // if user enters a number not b/w 8 and 128, notify of error, and restart function
-    else {
-
-      window.alert("You need to choose between 8 and 128 characters for your password. Please try again.");
-
-      return generatePassword ();
-
-    }
-
-}
-
-
 // if user wants to use all 4 character types
-
 var fourArrays = function () {
-
   // check to make sure user selected 'yes' on all four character types
   if (promptLowerCase === "yes" && promptUpperCase === "yes" && promptSpecialChar === "yes" && promptNumbers === "yes" ) {
     
@@ -106,30 +127,38 @@ var fourArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for any of the four arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
 
       if (chooseArray <= .25){
+
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
       }
 
       else if (chooseArray > .25 && chooseArray <= .5) {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
         pass = pass + upperCase[randomIndexUppercase];
       }
 
       else if (chooseArray > .5 && chooseArray <= .75) {
-        pass = pass + specialChar[randomIndexSpecialChar];
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
+        pass = pass + specialChar[randomIndexSpecialChar]; 
       }
 
       else {
-        pass = pass + numbers[randomIndexNumbers];
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
+        pass = pass + numbers[randomIndexNumbers];        
+
       }
     }
   }
 }
 
-
 // if user wants to use 3 character types
-
 var threeArrays = function () {
 
   // check to make sure user selected 'yes' on three character types, but not numbers
@@ -139,17 +168,23 @@ var threeArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for any of the three arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
-
+      var chooseArray = Math.random();
+      
       if (chooseArray <= .33){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
       }
 
       else if (chooseArray > .33 && chooseArray <= .66) {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
         pass = pass + upperCase[randomIndexUppercase];
       }
 
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
         pass = pass + specialChar[randomIndexSpecialChar];
       }
     }
@@ -161,18 +196,24 @@ var threeArrays = function () {
     // use a loop to build password until password length is the same as what user chose
     for (var i = 0; i <= passLength; i++) {
   
-      // provides an equal random chance for any of the three arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
-  
+      // provides an equal random chance for any of the three arrays to be chosen  
+      var chooseArray = Math.random();
+
       if (chooseArray <= .33){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
       }
   
       else if (chooseArray > .33 && chooseArray <= .66) {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
         pass = pass + upperCase[randomIndexUppercase];
       }
   
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
         pass = pass + numbers[randomIndexNumbers];
       }
     }
@@ -185,17 +226,23 @@ var threeArrays = function () {
     for (var i = 0; i <= passLength; i++) {
   
       // provides an equal random chance for any of the three arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
   
       if (chooseArray <= .33){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
       }
   
       else if (chooseArray > .33 && chooseArray <= .66) {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
         pass = pass + specialChar[randomIndexSpecialChar];
       }
   
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
         pass = pass + numbers[randomIndexNumbers];
       }
     } 
@@ -207,28 +254,31 @@ var threeArrays = function () {
     // use a loop to build password until password length is the same as what user chose
     for (var i = 0; i <= passLength; i++) {
   
-      // provides an equal random chance for any of the three arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
-  
+      // provides an equal random chance for any of the three arrays to be chosen  
+      var chooseArray = Math.random();
+
       if (chooseArray <= .33){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
         pass = pass + upperCase[randomIndexUppercase];
       }
   
       else if (chooseArray > .33 && chooseArray <= .66) {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
         pass = pass + specialChar[randomIndexSpecialChar];
       }
   
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
         pass = pass + numbers[randomIndexNumbers];
       }
     }
   }
 }
 
-
-
 // if user wants to use 2 character types
-
 var twoArrays = function () {
 
   // check to make sure user selected 'yes' on two character types - lowercase + uppercase
@@ -238,13 +288,17 @@ var twoArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for either of the two arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
 
       if (chooseArray <= .5){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);        
         pass = pass + lowerCase[randomIndexLowercase];
       }
 
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
         pass = pass + upperCase[randomIndexUppercase];
       }
     }
@@ -257,13 +311,17 @@ var twoArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for either of the two arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
 
       if (chooseArray <= .5){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
       }
 
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
         pass = pass + specialChar[randomIndexSpecialChar];
       }
     }
@@ -276,13 +334,17 @@ var twoArrays = function () {
     for (var i = 0; i <= passLength; i++) {
   
       // provides an equal random chance for either of the two arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
-  
+      var chooseArray = Math.random();
+
       if (chooseArray <= .5){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexLowercase = randomize(26);
         pass = pass + lowerCase[randomIndexLowercase];
       }
   
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
         pass = pass + numbers[randomIndexNumbers];
       }
     }
@@ -295,13 +357,17 @@ var twoArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for either of the two arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
 
       if (chooseArray <= .5){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
         pass = pass + upperCase[randomIndexUppercase];
       }
 
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
         pass = pass + numbers[randomIndexNumbers];
       }
     }
@@ -314,13 +380,16 @@ var twoArrays = function () {
     for (var i = 0; i <= passLength; i++) {
   
       // provides an equal random chance for either of the two arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
   
       if (chooseArray <= .5){
-        pass = pass + upperCase[randomIndexUppercase];
-      }
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexUppercase = randomize(26);
+        pass = pass + upperCase[randomIndexUppercase];      }
   
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
         pass = pass + specialChar[randomIndexSpecialChar];
       }
     }
@@ -333,22 +402,24 @@ var twoArrays = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // provides an equal random chance for either of the two arrays to be chosen
-          // randomizes which index (character) is chosen for the randomly chosen array & add it to the end of the growing password
+      var chooseArray = Math.random();
 
       if (chooseArray <= .5){
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexSpecialChar = randomize(19);
         pass = pass + specialChar[randomIndexSpecialChar];
       }
 
       else {
+        // choose which random index is chosen from the array, then add to end of password
+        var randomIndexNumbers = randomize(9);
         pass = pass + numbers[randomIndexNumbers];
       }
     }
   }
 }
 
-
 // if user wants to use a single character type
-
 var singleArray = function () {
 
   // check to make sure user selected 'yes' on a single character type - lowercase
@@ -358,8 +429,8 @@ var singleArray = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // randomizes which index (character) is chosen for the chosen character type & add it to the end of the growing password
+      var randomIndexLowerCase = randomize(26);
       pass = pass + lowerCase[randomIndexLowercase];
-        
     }
   }
 
@@ -370,8 +441,8 @@ var singleArray = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // randomizes which index (character) is chosen for the chosen character type & add it to the end of the growing password
+      var randomIndexUpperCase = randomize(26);
       pass = pass + upperCase[randomIndexUpperCase];
-        
     }
   }
 
@@ -382,8 +453,8 @@ var singleArray = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // randomizes which index (character) is chosen for the chosen character type & add it to the end of the growing password
-      pass = pass + specialChar[randomIndexSpecialChar];
-        
+      var randomIndexSpecialChar = randomize(19);
+      pass = pass + specialChar[randomIndexSpecialChar];   
     }
   }
 
@@ -394,21 +465,12 @@ var singleArray = function () {
     for (var i = 0; i <= passLength; i++) {
 
       // randomizes which index (character) is chosen for the chosen character type & add it to the end of the growing password
-      pass = pass + numbers[randomIndexNumbers];
-        
+      var randomIndexNumbers = randomize(9);
+      pass = pass + numbers[randomIndexNumbers];    
     }
   }
 
 }
-
-// function that selects a random index using the upper and lower parameters of an arrays length
-var randomize = function(min, max) {
-
-    var value = Math.floor(Math.random() * (max - min + 1) + min);
-  
-    return value;
-
-  };
 
 // checks user response for desired characters and runs through functions to build password or catches incorrect responses and restarts password generator
 var checkArrays = function () {
@@ -417,48 +479,83 @@ var checkArrays = function () {
   threeArrays();
   twoArrays();
   singleArray();
-
-  errorCatcher();
  
 }
 
-// checks to see if user selected appropriate response during character type selection process
-    // if user enters wrong info, they are notified and forced to restart password generator
-var errorCatcher = function() {
+// main function to generate password
+var generatePassword = function (){
 
-  if (promptLowerCase === !"yes" && promptLowerCase === !"no") {
+  choosePassLength();
 
-    window.alert("You must choose either yes or no. Please try again.");
+  // retrieve user input about which chars to use and catch erroneous responses, then force user to try again for a correct response
+  promptLowerCase = promptLowerCaseFunc();
+  
+  promptUpperCase = promptUpperCaseFunc();
 
-    return generatePassword();
+  promptSpecialChar = promptSpecialCharFunc();
 
-  }
+  promptNumbers = promptNumbersFunc();
 
-  else if (promptUpperCase === !"yes" && promptUpperCase === !"no") {
 
-    window.alert("You must choose either yes or no. Please try again.");
+    // check to see if the users desired password length is between 8 and 128 characters
+    if (passLength >=8 && passLength <= 128) {
 
-    return generatePassword();
+      // check the responses of the user for each character type & run through each function until correct matching statements are found
 
-  }
+      checkArrays();
 
-  else if (promptSpecialChar === !"yes" && promptSpecialChar === !"no") {
+      return pass;
+    }
 
-    window.alert("You must choose either yes or no. Please try again.");
+      // make the cancel button work
+      if (passLength === null) {
+        return;
+      }
 
-    return generatePassword();
+    // if user enters a number not b/w 8 and 128, notify of error, and restart function
+    else {
 
-  }
+      window.alert("You need to choose between 8 and 128 characters for your password. Please try again.");
 
-  else if (promptNumbers === !"yes" && promptNumbers === !"no") {
+      return generatePassword ();
 
-    window.alert("You must choose either yes or no. Please try again.");
+    }
 
-    return generatePassword();
-
-  }
+  writePassword();
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
